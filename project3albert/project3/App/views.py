@@ -1,5 +1,4 @@
 from django.shortcuts import render,redirect
-from django.http import HttpResponse
 
 from django.contrib.auth.models import User
 from django.contrib import messages
@@ -22,6 +21,7 @@ def signup(request):
             else:
                 new_user=User.objects.filter(username,email,password1)
                 new_user.save()
+                print('success')
                 return redirect(user_login)
         else:
             print("wrong password")
