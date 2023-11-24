@@ -9,26 +9,25 @@ def home(request):
     return render(request,'base.html')
 def signup(request):
     if request.method=='POST':
-        
         username=request.POST.get('username')
         email=request.POST.get('email')
         password1=request.POST.get('pass1')
         password2=request.POST.get('cpass1')
         if password1==password2:
             if User.objects.filter(username=username,email=email).exists():
-                messages.info(request,'username already exists')
-                print("Already Have")
+                    messages.info(request,'username already exists')
+                    print("Already Have")
             else:
-                new_user=User.objects.filter(username,email,password1)
+                new_user=User.objects.create_user(username,email,password1)
                 new_user.save()
                 print('success')
                 return redirect(user_login)
         else:
             print("wrong password")
     return render(request,'signup.html')
+
 def user_login(request):
     if request.method=='POST':
-        
         username=request.POST.get('username')
         password1=request.POST.get('pass1')
         user=authenticate(request,username=username,password=password1)
@@ -45,6 +44,19 @@ def user_login(request):
 def user_logout(request):
     logout(request)
     return redirect(user_login)
+def home(request):
+    d=student.objects.all()
+    return render(request,'base.html',{'t':d})
+from App.form import*
+def form1(request):
+        form=studentform()
+        if(request.method=='POST'):
+             form=studentform(request.POST)
+             if (form. is_valid()):
+                  form.save()
+                  return home (request)
+        return render(request,'form1.html',{'form':form})
+        
 
 
    
