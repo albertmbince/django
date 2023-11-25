@@ -3,6 +3,8 @@ from django.shortcuts import render,redirect
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import authenticate,login,logout
+from App.models import*
+from App.form import*
 
 
 def home(request):
@@ -44,22 +46,42 @@ def user_login(request):
 def user_logout(request):
     logout(request)
     return redirect(user_login)
-def home(request):
-    d=student.objects.all()
-    return render(request,'base.html',{'t':d})
-from App.form import*
-def form1(request):
-        form=studentform()
-        if(request.method=='POST'):
-             form=studentform(request.POST)
-             if (form. is_valid()):
-                  form.save()
-                  return home (request)
-        return render(request,'form1.html',{'form':form})
+
         
 
+def add_book(request):
+    #  form=bookform()
+     if(request.method=='POST'):
+          d=studentform(request.POST)
+          if d.is_valid():
+            d.save()
+            return redirect(view_book)
+     return render (request,'add_book.html')
+def view_book(request):
+    b=book.objects.all()
+    return render (request,'list.html',{'book':b})
+# def edit(request,a):
+#     m=book.objects.get(pk=a)
+#     form=studentform(instance=m)
+#     if request.method=='POST':
+#         form=studentform(request.POST,instance=m)
+#         if form.is_valid():
+#             form.save()
+#             return home (request)
+#     return render (request,"edit.html",{'form':form})
+# def deleteitem(request,a):
+#     m=book.objects.get(pk=a)
+#     m.delete()
+#     return render (request,'form1.html')
+# def form1(request):
+#     form=studentform()
+#     if request.method=='POST':
+#         form=studentform(request.POST)
+#         if form.is_valid():
+#             form.save()
+#             return redirect(form1)
+#     return render (request,'form1.html')
 
-   
 
 
 # Create your views here.

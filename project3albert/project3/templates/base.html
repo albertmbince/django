@@ -16,8 +16,11 @@
 
     {% if user.is_authenticated %}
     <li class="nav-item">
-      <a class="nav-link" href="#">Add</a>
+      <a class="nav-link" href="{% url "add" %}">Add Book</a>
   </li>
+  <li class="nav-item">
+    <a class="nav-link" href="{% url "list" %}">view Book</a>
+</li>
     <li class="nav-item">
         <a class="nav-link" href="{% url "user_logout" %}">Logout</a>
     </li>
@@ -27,35 +30,24 @@
     </li>
     <li class="nav-item">
       <a class="nav-link" href="{% url "user_login" %}">Login</a>
+
     </li>
+    <li class="nav-item">
+      <a class="nav-link active" aria-current="page" href=" {% url "home" %}">Home</a>
+    </li>
+
     {% comment %} <li class="nav-item">
       <a class="nav-link" href="{% url "form1" %}">Form</a>
     </li> {% endcomment %}
     {% endif %}
   </ul>
-{% block body_block%}
+{% block body_block %}
 <h1>Welcome to homepage</h1>
 {% if user.is_authenticated%}
 <h1>{{user}}</h1>
 {% endif %}
 {% endblock %}
 
-<table>
-  <tr>
-      <td>{{name}}</td>
-      <td>{{age}}</td>
-  </tr>
-</table>
-<table>
-  {% for i in t%}
-  <tr>
-      <td>{{i.Rollno}}</td>
-      <td>{{i.name}}</td>
-      <td>{{i.place}}</td>
-  </tr>
-  {% endfor %}
-</table>
-<a href="{% url 'form1' %}">Form</a>
 
 </body>
 </html>
